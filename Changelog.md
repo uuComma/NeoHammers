@@ -1,1 +1,1 @@
-- Wooden hammers are now furnace fuel
+- Changed internal package structure

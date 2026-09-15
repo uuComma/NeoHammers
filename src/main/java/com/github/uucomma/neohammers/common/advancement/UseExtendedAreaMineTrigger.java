@@ -47,11 +47,7 @@ public class UseExtendedAreaMineTrigger extends SimpleCriterionTrigger<UseExtend
 
         public boolean matches(ItemStack stack) {
             Pair<?, Integer> highestLevel = EnchantmentHelper.getHighestLevel(stack, ModEnchantmentEffectComponents.EXTENDED_AREA_MINE.get());
-            if (highestLevel != null) {
-                return highestLevel.getSecond() >= this.minLevel.orElse(1);
-            }
-
-            return false;
+            return highestLevel.getSecond() >= this.minLevel.orElse(1);
         }
     }
 }

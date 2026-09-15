@@ -51,4 +51,4 @@ for this mod and is updated more frequently than Architectury.
 
 **Where can I report issues? // Where can I create feature requests?**
 
-You can report issues and create feature request [here](https://github.com/Command17/NeoHammers/issues).
+You can report issues and create feature request [here](https://github.com/uuComma/NeoHammers/issues).

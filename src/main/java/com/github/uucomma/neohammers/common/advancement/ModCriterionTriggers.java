@@ -1,7 +1,7 @@
 package com.github.uucomma.neohammers.common.advancement;
 
 import com.github.uucomma.neohammers.NeoHammers;
-import net.minecraft.advancements.CriterionTrigger;
+import net.minecraft.advancements.triggers.CriterionTrigger;
 import net.minecraft.core.registries.Registries;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;

@@ -1,15 +1,18 @@
 {
   "type": "neohammers:add_enchanted_book",
-  "conditions": [
-    {
-      "condition": "neoforge:loot_table_id",
-      "loot_table_id": "minecraft:chests/trial_chambers/reward_ominous"
-    },
-    {
-      "chance": 0.2,
-      "condition": "minecraft:random_chance"
-    }
-  ],
+  "condition": {
+    "type": "minecraft:all_of",
+    "terms": [
+      {
+        "type": "neoforge:loot_table_id",
+        "loot_table_id": "minecraft:chests/trial_chambers/reward_ominous"
+      },
+      {
+        "type": "minecraft:random_chance",
+        "chance": 0.2
+      }
+    ]
+  },
   "enchantment": "neohammers:hammering",
   "maxLevel": 6,
   "minLevel": 3,

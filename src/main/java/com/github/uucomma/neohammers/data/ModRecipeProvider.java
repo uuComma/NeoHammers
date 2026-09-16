@@ -2,28 +2,22 @@ package com.github.uucomma.neohammers.data;
 
 import com.github.uucomma.neohammers.NeoHammers;
 import com.github.uucomma.neohammers.common.item.ModItems;
-import net.minecraft.core.HolderGetter;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.data.PackOutput;
+import net.minecraft.advancements.Advancement;
 import net.minecraft.data.recipes.*;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.CookingBookCategory;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.ItemLike;
 import net.neoforged.neoforge.common.Tags;
-import org.jspecify.annotations.NullMarked;
-
-import java.util.concurrent.CompletableFuture;
 
 public class ModRecipeProvider extends RecipeProvider {
-    private final HolderGetter<Item> itemLookup = this.registries.lookupOrThrow(Registries.ITEM);
-
-    protected ModRecipeProvider(HolderLookup.Provider registries, RecipeOutput output) {
-        super(registries, output);
+    public ModRecipeProvider(BootstrapContext<Recipe<?>> context, BootstrapContext<Advancement> advancementContext) {
+        super(context, advancementContext);
     }
 
     @Override
@@ -55,7 +49,7 @@ public class ModRecipeProvider extends RecipeProvider {
     }
 
     private void createHammer(ItemLike material, ItemLike result) {
-        ShapedRecipeBuilder.shaped(itemLookup, RecipeCategory.TOOLS, result)
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.TOOLS, result)
                 .pattern(" x ")
                 .pattern(" #x")
                 .pattern("#  ")
@@ -66,7 +60,7 @@ public class ModRecipeProvider extends RecipeProvider {
     }
 
     private void createHammer(TagKey<Item> material, ItemLike result) {
-        ShapedRecipeBuilder.shaped(itemLookup, RecipeCategory.TOOLS, result)
+        ShapedRecipeBuilder.shaped(items, RecipeCategory.TOOLS, result)
                 .pattern(" x ")
                 .pattern(" #x")
                 .pattern("#  ")
@@ -85,22 +79,5 @@ public class ModRecipeProvider extends RecipeProvider {
                 resultItem
         ).unlocks("has_netherite_ingot", has(Items.NETHERITE_INGOT))
                 .save(output, NeoHammers.resource(getItemName(resultItem) + "_smithing").toString());
-    }
-
-    @NullMarked
-    public static class Runner extends RecipeProvider.Runner {
-        protected Runner(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> registries) {
-            super(packOutput, registries);
-        }
-
-        @Override
-        protected RecipeProvider createRecipeProvider(HolderLookup.Provider registries, RecipeOutput output) {
-            return new ModRecipeProvider(registries, output);
-        }
-
-        @Override
-        public String getName() {
-            return NeoHammers.resource("recipes").toString();
-        }
     }
 }

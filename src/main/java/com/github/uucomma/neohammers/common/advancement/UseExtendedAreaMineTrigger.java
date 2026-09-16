@@ -4,13 +4,14 @@ import com.github.uucomma.neohammers.common.enchantment.ModEnchantmentEffectComp
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.advancements.predicates.ContextAwarePredicate;
 import net.minecraft.advancements.predicates.entity.EntityPredicate;
 import net.minecraft.advancements.triggers.Criterion;
 import net.minecraft.advancements.triggers.SimpleCriterionTrigger;
+import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import org.jspecify.annotations.NullMarked;
 
 import java.util.Optional;
@@ -27,18 +28,18 @@ public class UseExtendedAreaMineTrigger extends SimpleCriterionTrigger<UseExtend
     }
 
     public record TriggerInstance(
-            Optional<ContextAwarePredicate> player,
+            Optional<Holder<LootItemCondition>> player,
             Optional<Integer> minLevel
     ) implements SimpleCriterionTrigger.SimpleInstance {
         public static final Codec<TriggerInstance> CODEC = RecordCodecBuilder.create(
                 (instance) -> instance.group(
-                        EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player").forGetter(TriggerInstance::player),
+                        LootItemCondition.CODEC.optionalFieldOf("player").forGetter(TriggerInstance::player),
                         Codec.INT.optionalFieldOf("minLevel").forGetter(TriggerInstance::minLevel)
                 ).apply(instance, TriggerInstance::new)
         );
 
-        public static Criterion<TriggerInstance> instance(ContextAwarePredicate player, int minLevel) {
-            return ModCriterionTriggers.USE_EXTENDED_AREA_MINE_TRIGGER.get().createCriterion(new TriggerInstance(Optional.of(player), Optional.of(minLevel)));
+        public static Criterion<TriggerInstance> instance(Optional<EntityPredicate> player, int minLevel) {
+            return ModCriterionTriggers.USE_EXTENDED_AREA_MINE_TRIGGER.get().createCriterion(new TriggerInstance(EntityPredicate.wrap(player), Optional.of(minLevel)));
         }
 
         public static Criterion<TriggerInstance> instance(int minLevel) {

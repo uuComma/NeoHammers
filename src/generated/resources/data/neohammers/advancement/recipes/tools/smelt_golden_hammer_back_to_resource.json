@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "neohammers:smelt_golden_hammer_back_to_resource"
+        "recipes": "neohammers:smelt_golden_hammer_back_to_resource"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

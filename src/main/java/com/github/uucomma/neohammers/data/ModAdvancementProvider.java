@@ -13,6 +13,9 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.advancements.AdvancementProvider;
 import net.minecraft.data.advancements.AdvancementSubProvider;
+import net.minecraft.data.worldgen.BootstrapContext;
+import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import org.jspecify.annotations.NullMarked;
@@ -22,39 +25,42 @@ import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
 public class ModAdvancementProvider extends AdvancementProvider {
-    public ModAdvancementProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
-        super(output, registries, List.of(new ModAdvancementGenerator()));
+    public ModAdvancementProvider() {
+        super(List.of(ModAdvancementGenerator::new));
     }
 
     @NullMarked
-    private static class ModAdvancementGenerator implements AdvancementSubProvider {
+    private static class ModAdvancementGenerator extends AdvancementSubProvider {
+        protected ModAdvancementGenerator(BootstrapContext<Advancement> output) {
+            super(output);
+        }
+
         @Override
-        public void generate(HolderLookup.Provider registries, Consumer<AdvancementHolder> saver) {
-            HolderGetter<Item> itemLookup = registries.lookupOrThrow(Registries.ITEM);
+        public void generate() {
+            var itemLookup = output.lookup(Registries.ITEM);
+            Identifier adventureRootId = Identifier.withDefaultNamespace("adventure/root");
             AdvancementHolder hammerTime = Advancement.Builder.advancement()
                     .display(
                             ModItems.IRON_HAMMER.get(),
                             NeoHammers.translate("advancement.", ".hammerTime.title"),
                             NeoHammers.translate("advancement.", ".hammerTime.desc"),
-                            null,
                             AdvancementType.TASK,
                             true,
                             true,
                             false
                     )
-                    .parent(AdvancementSubProvider.createPlaceholder("minecraft:adventure/root"))
+                    .parent(adventureRootId)
                     .addCriterion(
                             "has_any_hammer",
                             InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item().of(itemLookup, ModTags.ItemTags.HAMMERS))
                     )
-                    .save(saver, NeoHammers.resource("adventure/hammer_time"));
+                    .save(output, NeoHammers.resource("adventure/hammer_time"));
 
             AdvancementHolder seriousDestructionNeeds = Advancement.Builder.advancement()
                     .display(
                             ModItems.NETHERITE_HAMMER.get(),
                             NeoHammers.translate("advancement.", ".seriousDestructionNeeds.title"),
                             NeoHammers.translate("advancement.", ".seriousDestructionNeeds.desc"),
-                            null,
                             AdvancementType.CHALLENGE,
                             true,
                             true,
@@ -66,14 +72,13 @@ public class ModAdvancementProvider extends AdvancementProvider {
                             "has_netherite_hammer",
                             InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.NETHERITE_HAMMER.get())
                     )
-                    .save(saver, NeoHammers.resource("adventure/serious_destruction_needs"));
+                    .save(output, NeoHammers.resource("adventure/serious_destruction_needs"));
 
             AdvancementHolder seriousDestruction = Advancement.Builder.advancement()
                     .display(
                             Items.ENCHANTED_BOOK,
                             NeoHammers.translate("advancement.", ".seriousDestruction.title"),
                             NeoHammers.translate("advancement.", ".seriousDestruction.desc"),
-                            null,
                             AdvancementType.CHALLENGE,
                             true,
                             true,
@@ -85,7 +90,7 @@ public class ModAdvancementProvider extends AdvancementProvider {
                             "destroy_everything",
                             UseExtendedAreaMineTrigger.TriggerInstance.instance(6)
                     )
-                    .save(saver, NeoHammers.resource("adventure/serious_destruction"));
+                    .save(output, NeoHammers.resource("adventure/serious_destruction"));
         }
     }
 }

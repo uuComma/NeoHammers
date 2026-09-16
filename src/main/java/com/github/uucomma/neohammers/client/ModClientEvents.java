@@ -5,13 +5,13 @@ import com.github.uucomma.neohammers.common.enchantment.ModEnchantmentEffectComp
 import com.github.uucomma.neohammers.common.item.HammerItem;
 import com.github.uucomma.neohammers.mixin.client.LevelRendererAccessor;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.LevelRenderer;
-import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.SubmitNodeStorage;
 import net.minecraft.client.renderer.block.dispatch.BlockStateModel;
+import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.state.level.BlockBreakingRenderState;
 import net.minecraft.client.renderer.state.level.BlockOutlineRenderState;
@@ -27,22 +27,22 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.ExtractLevelRenderStateEvent;
 import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
-@OnlyIn(Dist.CLIENT)
 @EventBusSubscriber(modid = NeoHammers.MOD_ID, value = Dist.CLIENT)
 public final class ModClientEvents {
     private static final ContextKey<List<BlockOutlineRenderState>> extraBlockOutlineRenderStates = new ContextKey<>(NeoHammers.resource("extrablockoutlinerenderstates"));
 
     @SubscribeEvent
     public static void renderExtraOutlines(RenderLevelStageEvent.AfterTranslucentFeatures event) {
+        GameRenderer gameRenderer = Minecraft.getInstance().gameRenderer;
         LevelRenderer levelRenderer = event.getLevelRenderer();
         LevelRenderState levelRenderState = event.getLevelRenderState();
         List<BlockOutlineRenderState> outlineRenderStates = levelRenderState.getRenderDataOrDefault(extraBlockOutlineRenderStates, new ArrayList<>());
@@ -53,13 +53,23 @@ public final class ModClientEvents {
             BlockPos pos = renderState.pos();
             poseStack.pushPose();
             poseStack.translate(pos.getX() - camPos.x(), pos.getY() - camPos.y(), pos.getZ() - camPos.z());
+
+            RenderType renderType;
+            if (renderState.highContrast()) {
+                renderType = RenderTypes.linesDepthBias();
+            } else if (gameRenderer.useImprovedTransparency()) {
+                renderType = RenderTypes.linesTranslucentNoDepthWrite();
+            } else {
+                renderType = RenderTypes.linesTranslucent();
+            }
+
             ((LevelRendererAccessor) levelRenderer).renderOutline(
                     poseStack,
                     submitNodeStorage,
-                    RenderTypes.lines(),
+                    renderType,
                     renderState,
                     renderState.highContrast() ? -11010079 : ARGB.black(102),
-                    Minecraft.getInstance().gameRenderer.gameRenderState().windowRenderState.appropriateLineWidth,
+                    gameRenderer.gameRenderState().windowRenderState.appropriateLineWidth,
                     renderState.isTranslucent()
             );
 
@@ -86,7 +96,7 @@ public final class ModClientEvents {
                     .orElse(-1);
 
             List<BlockOutlineRenderState> extraOutlineRenderStateList
-                    = levelRenderState.getRenderDataOrDefault(extraBlockOutlineRenderStates, new ArrayList<>());
+                    = levelRenderState.getRenderDataOrDefault(extraBlockOutlineRenderStates, new ArrayList<>(16));
 
             extraOutlineRenderStateList.clear();
 
@@ -102,7 +112,7 @@ public final class ModClientEvents {
                 }
 
                 // This fixes a bug where the block positions change before rendering
-                BlockPos posClone = new BlockPos(pos);
+                BlockPos posClone = new BlockPos(pos.getX(), pos.getY(), pos.getZ());
 
                 if (breakProgress != -1) {
                     levelRenderState.blockBreakingRenderStates.add(new BlockBreakingRenderState(posClone, state, breakProgress));

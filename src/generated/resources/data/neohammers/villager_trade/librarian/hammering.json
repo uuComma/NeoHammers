@@ -1,28 +1,46 @@
 {
-  "given_item_modifiers": [
+  "given_item_modifier": [
     {
+      "type": "minecraft:set_enchantments",
       "enchantments": {
         "neohammers:hammering": {
           "type": "minecraft:uniform",
-          "max": 3.0,
-          "min": 1.0
+          "max": 3,
+          "min": 1
+        }
+      }
+    },
+    {
+      "type": "minecraft:filtered",
+      "item_filter": {
+        "items": "minecraft:enchanted_book",
+        "predicates": {
+          "minecraft:stored_enchantments": [
+            {
+              "levels": {
+                "max": 3,
+                "min": 1
+              }
+            }
+          ]
         }
       },
-      "function": "minecraft:set_enchantments"
+      "on_fail": {
+        "type": "minecraft:discard"
+      }
     }
   ],
   "gives": {
     "id": "minecraft:book"
   },
-  "max_uses": 6.0,
-  "reputation_discount": 0.05,
+  "max_uses": 3,
   "wants": {
     "count": {
       "type": "minecraft:uniform",
-      "max": 55.0,
-      "min": 15.0
+      "max": 55,
+      "min": 15
     },
     "id": "minecraft:emerald"
   },
-  "xp": 3.0
+  "xp": 15
 }

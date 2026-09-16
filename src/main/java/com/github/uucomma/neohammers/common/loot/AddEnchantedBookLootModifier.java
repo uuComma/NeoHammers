@@ -15,6 +15,8 @@ import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
 import net.neoforged.neoforge.common.loot.LootModifier;
 import org.jspecify.annotations.NullMarked;
 
+import java.util.Optional;
+
 @NullMarked
 public class AddEnchantedBookLootModifier extends LootModifier {
     public static final MapCodec<AddEnchantedBookLootModifier> CODEC = RecordCodecBuilder.mapCodec(
@@ -28,8 +30,8 @@ public class AddEnchantedBookLootModifier extends LootModifier {
     private final int minLevel;
     private final int maxLevel;
 
-    public AddEnchantedBookLootModifier(LootItemCondition[] conditionsIn, int priority, Holder<Enchantment> enchantment, int minLevel, int maxLevel) {
-        super(conditionsIn, priority);
+    public AddEnchantedBookLootModifier(Optional<Holder<LootItemCondition>> condition, int priority, Holder<Enchantment> enchantment, int minLevel, int maxLevel) {
+        super(condition, priority);
         this.enchantment = enchantment;
         this.minLevel = minLevel;
         this.maxLevel = maxLevel;
@@ -37,8 +39,8 @@ public class AddEnchantedBookLootModifier extends LootModifier {
 
     @Override
     protected ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> loot, LootContext context) {
-        for (LootItemCondition condition: this.conditions) {
-            if (!condition.test(context)) return loot;
+        if (this.condition.isPresent() && !this.condition.get().value().test(context)) {
+            return loot;
         }
 
         int level = context.getRandom().nextIntBetweenInclusive(this.minLevel, this.maxLevel);

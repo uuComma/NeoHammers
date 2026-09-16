@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "neohammers:stone_hammer"
+        "recipes": "neohammers:stone_hammer"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

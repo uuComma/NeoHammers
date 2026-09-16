@@ -8,12 +8,12 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.Identifier;
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.world.level.storage.loot.predicates.AllOfCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
 import net.neoforged.neoforge.common.data.GlobalLootModifierProvider;
 import net.neoforged.neoforge.common.loot.LootTableIdCondition;
 
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 public class ModGlobalLootModifierProvider extends GlobalLootModifierProvider {
@@ -23,21 +23,27 @@ public class ModGlobalLootModifierProvider extends GlobalLootModifierProvider {
 
     @Override
     protected void start() {
-        Holder.Reference<Enchantment> hammeringEnchantment = this.registries.lookup(Registries.ENCHANTMENT)
+        var hammeringEnchantment = this.registries.lookup(Registries.ENCHANTMENT)
                 .flatMap((registryLookup) -> registryLookup.get(ModEnchantments.HAMMERING))
                         .orElseThrow();
 
         add(
                 "add_hammering_to_ominous_vault_loot",
                 new AddEnchantedBookLootModifier(
-                        new LootItemCondition[] {
-                                new LootTableIdCondition.Builder(Identifier.withDefaultNamespace("chests/trial_chambers/reward_ominous")).build(),
-                                LootItemRandomChanceCondition.randomChance(0.2f).build()
-                        },
+                        optionalHolder(
+                                AllOfCondition.allOf(
+                                        LootTableIdCondition.builder(Identifier.withDefaultNamespace("chests/trial_chambers/reward_ominous")),
+                                        LootItemRandomChanceCondition.randomChance(0.2f)
+                                ).build()
+                        ),
                         0,
                         hammeringEnchantment,
                         3, 6
                 )
         );
+    }
+
+    private<T> Optional<Holder<T>> optionalHolder(T value) {
+        return Optional.of(Holder.direct(value));
     }
 }

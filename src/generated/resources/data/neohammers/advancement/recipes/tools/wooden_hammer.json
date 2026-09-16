@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "neohammers:wooden_hammer"
+        "recipes": "neohammers:wooden_hammer"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

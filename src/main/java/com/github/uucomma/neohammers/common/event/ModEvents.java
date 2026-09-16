@@ -5,6 +5,7 @@ import com.github.uucomma.neohammers.common.advancement.ModCriterionTriggers;
 import com.github.uucomma.neohammers.common.enchantment.ModEnchantmentEffectComponents;
 import com.github.uucomma.neohammers.common.item.HammerItem;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
@@ -45,7 +46,7 @@ public final class ModEvents {
                     return;
                 }
 
-                state.getBlock().playerDestroy(player.level(), player, pos, state, level.getBlockEntity(pos), stack);
+                state.getBlock().playerDestroy((ServerLevel) player.level(), (ServerPlayer) player, pos, state, level.getBlockEntity(pos), stack);
                 level.setBlock(pos, Blocks.AIR.defaultBlockState(), Block.UPDATE_ALL);
                 stack.hurtAndBreak(1, player, EquipmentSlot.MAINHAND);
             });

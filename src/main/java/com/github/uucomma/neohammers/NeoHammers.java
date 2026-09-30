@@ -22,7 +22,7 @@ public final class NeoHammers {
     public static final String MOD_ID = "neohammers";
     public static final Logger LOGGER = LogUtils.getLogger();
 
-    public static final ModCommonConfig CONFIG;
+    public static final ModLocalConfig CONFIG;
     public static final ModConfigSpec CONFIG_SPEC;
 
     public NeoHammers(IEventBus eventBus, ModContainer modContainer) {
@@ -32,7 +32,7 @@ public final class NeoHammers {
         ModEnchantmentEffectComponents.register(eventBus);
         ModLootModifiers.register(eventBus);
         ModCriterionTriggers.register(eventBus);
-        modContainer.registerConfig(ModConfig.Type.COMMON, CONFIG_SPEC);
+        modContainer.registerConfig(ModConfig.Type.LOCAL, CONFIG_SPEC);
         LOGGER.info("Initialized.");
     }
 
@@ -58,7 +58,7 @@ public final class NeoHammers {
     }
 
     static {
-        var configPair = new ModConfigSpec.Builder().configure(ModCommonConfig::new);
+        var configPair = new ModConfigSpec.Builder().configure(ModLocalConfig::new);
         CONFIG = configPair.getLeft();
         CONFIG_SPEC = configPair.getRight();
     }

@@ -1,1 +1,2 @@
-- Ported to **26.3**
+- Updated to **NeoForge v26.3.0.38-beta**
+- The config was renamed in this update, you'll need move the values yourself

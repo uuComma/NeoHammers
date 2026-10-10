@@ -33,7 +33,6 @@ import net.neoforged.neoforge.client.event.ExtractLevelRenderStateEvent;
 import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 @EventBusSubscriber(modid = NeoHammers.MOD_ID, value = Dist.CLIENT)
@@ -45,7 +44,7 @@ public final class ModClientEvents {
         GameRenderer gameRenderer = Minecraft.getInstance().gameRenderer;
         LevelRenderer levelRenderer = event.getLevelRenderer();
         LevelRenderState levelRenderState = event.getLevelRenderState();
-        List<BlockOutlineRenderState> outlineRenderStates = levelRenderState.getRenderDataOrDefault(extraBlockOutlineRenderStates, new ArrayList<>());
+        List<BlockOutlineRenderState> outlineRenderStates = levelRenderState.getRenderDataOrDefault(extraBlockOutlineRenderStates, List.of());
         Vec3 camPos = levelRenderState.cameraRenderState.pos;
         PoseStack poseStack = event.getPoseStack();
         SubmitNodeStorage submitNodeStorage = ((LevelRendererAccessor) levelRenderer).getSubmitNodeStorage();

@@ -1,1 +1,2 @@
 - Changed internal package structure
+- Improved visuals

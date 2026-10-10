@@ -10,6 +10,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.block.dispatch.BlockStateModel;
+import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.state.level.BlockBreakingRenderState;
 import net.minecraft.client.renderer.state.level.BlockOutlineRenderState;
@@ -25,7 +26,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.ExtractLevelRenderStateEvent;
@@ -34,7 +34,6 @@ import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-@OnlyIn(Dist.CLIENT)
 @EventBusSubscriber(modid = NeoHammers.MOD_ID, value = Dist.CLIENT)
 public final class ModClientEvents {
     private static final ContextKey<List<BlockOutlineRenderState>> extraBlockOutlineRenderStates = new ContextKey<>(NeoHammers.resource("extrablockoutlinerenderstates"));
@@ -43,12 +42,13 @@ public final class ModClientEvents {
     public static void renderExtraOutlines(RenderLevelStageEvent.AfterTranslucentFeatures event) {
         LevelRenderer levelRenderer = event.getLevelRenderer();
         LevelRenderState levelRenderState = event.getLevelRenderState();
-        List<BlockOutlineRenderState> outlineRenderStates = levelRenderState.getRenderDataOrDefault(extraBlockOutlineRenderStates, new ArrayList<>());
+        List<BlockOutlineRenderState> outlineRenderStates = levelRenderState.getRenderDataOrDefault(extraBlockOutlineRenderStates, List.of());
         Vec3 camPos = levelRenderState.cameraRenderState.pos;
         PoseStack poseStack = event.getPoseStack();
-        VertexConsumer buffer = ((LevelRendererAccessor) levelRenderer).getRenderBuffers().bufferSource().getBuffer(RenderTypes.secondaryBlockOutline());
         for (var renderState: outlineRenderStates) {
             poseStack.pushPose();
+            RenderType renderType = renderState.highContrast() ? RenderTypes.secondaryBlockOutline() : RenderTypes.lines();
+            VertexConsumer buffer = ((LevelRendererAccessor) levelRenderer).getRenderBuffers().bufferSource().getBuffer(renderType);
             ((LevelRendererAccessor) levelRenderer).renderOutline(
                     poseStack,
                     buffer,

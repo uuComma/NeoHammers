@@ -35,7 +35,7 @@ public final class ModEvents {
                 stack.hurtAndBreak(1, player, EquipmentSlot.MAINHAND);
             });
 
-            ModCriterionTriggers.useExtendedAreaMineTrigger().trigger(player, stack);
+            ModCriterionTriggers.USE_EXTENDED_AREA_MINE_TRIGGER.get().trigger(player, stack);
         }
     }
 }

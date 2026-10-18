@@ -2,11 +2,9 @@ package com.github.uucomma.neohammers.common.enchantment;
 
 import com.github.uucomma.neohammers.NeoHammers;
 import com.github.uucomma.neohammers.common.util.ModTags;
-import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.util.Unit;
 import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.item.enchantment.Enchantment;
 
@@ -30,7 +28,7 @@ public final class ModEnchantments {
                         2, // Anvil Cost
                         EquipmentSlotGroup.MAINHAND // Equipment Slots
                 )
-        ).withEffect(ModEnchantmentEffectComponents.extendedAreaMine()).build(HAMMERING.identifier()));
+        ).withEffect(ModEnchantmentEffectComponents.EXTENDED_AREA_MINE.get()).build(HAMMERING.identifier()));
     }
 }
 

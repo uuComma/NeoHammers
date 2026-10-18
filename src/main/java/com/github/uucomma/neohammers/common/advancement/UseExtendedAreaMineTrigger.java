@@ -39,11 +39,11 @@ public class UseExtendedAreaMineTrigger extends SimpleCriterionTrigger<UseExtend
         );
 
         public static Criterion<TriggerInstance> instance(Optional<EntityPredicate> player, int minLevel) {
-            return ModCriterionTriggers.useExtendedAreaMineTrigger().createCriterion(new TriggerInstance(EntityPredicate.wrap(player), Optional.of(minLevel)));
+            return ModCriterionTriggers.USE_EXTENDED_AREA_MINE_TRIGGER.get().createCriterion(new TriggerInstance(EntityPredicate.wrap(player), Optional.of(minLevel)));
         }
 
         public static Criterion<TriggerInstance> instance(int minLevel) {
-            return ModCriterionTriggers.useExtendedAreaMineTrigger().createCriterion(new TriggerInstance(Optional.empty(), Optional.of(minLevel)));
+            return ModCriterionTriggers.USE_EXTENDED_AREA_MINE_TRIGGER.get().createCriterion(new TriggerInstance(Optional.empty(), Optional.of(minLevel)));
         }
 
         public boolean matches(ItemStack stack) {

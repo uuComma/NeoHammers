@@ -33,16 +33,18 @@ public abstract class RegistryHelper<T> implements Iterable<RegistrySupplier<T>>
         this(modId, (Registry<T>) BuiltInRegistries.REGISTRY.getValue(registryKey.identifier()), registryKey);
     }
 
-    public RegistrySupplier<T> register(String id, Supplier<T> value) {
+    public <R extends T> RegistrySupplier<R> register(String id, Supplier<R> value) {
         return this.register(this.identifier(id), value);
     }
 
-    public RegistrySupplier<T> register(Identifier id, Supplier<T> value) {
+    // Kinda hacky, but it works
+    @SuppressWarnings("unchecked")
+    public <R extends T> RegistrySupplier<R> register(Identifier id, Supplier<R> value) {
         ResourceKey<T> key = ResourceKey.create(this.registryKey, id);
         Supplier<Holder<T>> holderSupplier = () -> this.registry.get(id).orElseThrow();
-        RegistrySupplier<T> supplier = new RegistrySupplierImpl<>(value, holderSupplier, id, key);
+        RegistrySupplier<T> supplier = new RegistrySupplierImpl<>((Supplier<T>) value, holderSupplier, id, key);
         this.entries.add(supplier);
-        return supplier;
+        return (RegistrySupplier<R>) supplier;
     }
 
     public Identifier identifier(String name) {

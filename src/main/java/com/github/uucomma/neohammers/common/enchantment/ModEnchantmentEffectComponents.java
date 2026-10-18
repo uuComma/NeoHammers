@@ -11,13 +11,8 @@ import net.minecraft.util.Unit;
 public final class ModEnchantmentEffectComponents {
     private static final RegistryHelper<DataComponentType<?>> HELPER = Services.REGISTRY.create(NeoHammers.MOD_ID, Registries.ENCHANTMENT_EFFECT_COMPONENT_TYPE);
 
-    public static final RegistrySupplier<DataComponentType<?>> EXTENDED_AREA_MINE = HELPER.register("extended_area_mine",
+    public static final RegistrySupplier<DataComponentType<Unit>> EXTENDED_AREA_MINE = HELPER.register("extended_area_mine",
             () -> DataComponentType.<Unit>builder().persistent(Unit.CODEC).build());
-
-    @SuppressWarnings("unchecked")
-    public static DataComponentType<Unit> extendedAreaMine() {
-        return (DataComponentType<Unit>) EXTENDED_AREA_MINE.get();
-    }
 
     public static void register() {
         HELPER.register();

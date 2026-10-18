@@ -10,12 +10,8 @@ import net.minecraft.core.registries.Registries;
 public final class ModCriterionTriggers {
     private static final RegistryHelper<CriterionTrigger<?>> HELPER = Services.REGISTRY.create(NeoHammers.MOD_ID, Registries.TRIGGER_TYPE);
 
-    public static final RegistrySupplier<CriterionTrigger<?>> USE_EXTENDED_AREA_MINE_TRIGGER = HELPER.register("use_extended_area_mine_trigger",
+    public static final RegistrySupplier<UseExtendedAreaMineTrigger> USE_EXTENDED_AREA_MINE_TRIGGER = HELPER.register("use_extended_area_mine_trigger",
             UseExtendedAreaMineTrigger::new);
-
-    public static UseExtendedAreaMineTrigger useExtendedAreaMineTrigger() {
-        return (UseExtendedAreaMineTrigger) USE_EXTENDED_AREA_MINE_TRIGGER.get();
-    }
 
     public static void register() {
         HELPER.register();

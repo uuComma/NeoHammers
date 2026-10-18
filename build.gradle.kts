@@ -41,8 +41,9 @@ manifests {
         displayName = providers.gradleProperty("mod.displayName")
         description = providers.gradleProperty("mod.description")
         authors.addAll(providers.gradleProperty("mod.authors").get().split(","))
-        sourcesUrl = providers.gradleProperty("mod.sourcesURL")
+        sourcesUrl = providers.gradleProperty("mod.sourceURL");
         issueTrackerUrl = providers.gradleProperty("mod.issueURL")
+        homepage = providers.gradleProperty("mod.homepageURL")
         licenses.add(providers.gradleProperty("mod.license"))
         iconPath = providers.gradleProperty("mod.icon")
 
@@ -80,6 +81,13 @@ manifests {
             versionRange(providers.gradleProperty("fcapi.vr").get())
             required()
         }
+
+        val links = mutableMapOf<String, String>()
+        // TODO:
+        links["modmenu/source"] = sourcesUrl.get()
+        val modMenuData = mutableMapOf<String, Any>()
+        modMenuData["links"] = links
+        customData.put("modmenu", modMenuData)
     }
 
     neoForgeModsToml(sourceSets.neoforge.get()) {

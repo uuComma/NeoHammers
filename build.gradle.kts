@@ -9,7 +9,6 @@ plugins {
     alias(libs.plugins.modstitch.multiloader)
     alias(libs.plugins.modstitch.manifests)
     alias(libs.plugins.modstitch.modrepos)
-    alias(libs.plugins.modstitch.accessx)
 
     `maven-publish`
 }
@@ -34,23 +33,6 @@ val modid = providers.gradleProperty("mod.id").get()
 
 val minecraftVersionRange = providers.gradleProperty("minecraft.vr").get()
 val supportedMinecraftVersions = manifests.minecraftReleasesMatching(minecraftVersionRange)
-
-val awName = "$modid.accessWidener"
-val fabricAWTask = accessx.convert("fabric", sourceSets.fabric.get()) {
-    inputFiles.from(awName)
-    outputFormat = accessx.CT_V2
-}
-
-val neoforgeATTask = accessx.convert("neoforge", sourceSets.fabric.get()) {
-    inputFiles.from(awName)
-    outputFormat = accessx.AT
-}
-
-loom.accessWidenerPath = project.file(awName)
-accessTransformers.files.from(neoforgeATTask.flatMap { it.outputFile })
-tasks.named { it in listOf("neoFormTransformSource", "applyAccessTransformer") }.configureEach {
-    dependsOn(neoforgeATTask)
-}
 
 manifests {
     val common = manifest {
@@ -92,8 +74,6 @@ manifests {
             versionRange(providers.gradleProperty("fabric-api.vr").get())
             required()
         }
-
-        accessWidener(fabricAWTask)
     }
 
     neoForgeModsToml(sourceSets.neoforge.get()) {
@@ -106,8 +86,6 @@ manifests {
             versionRange(providers.gradleProperty("neoforge.vr").get())
             required()
         }
-
-        accessTransformer(neoforgeATTask)
     }
 }
 
@@ -135,6 +113,11 @@ ngRuns.create("clientData") {
 repositories {
     mavenCentral()
     terraformersMC()
+
+    maven {
+        name = "Fuzs Mod Resources"
+        url = uri("https://raw.githubusercontent.com/Fuzss/modresources/main/maven/")
+    }
 }
 
 dependencies {
@@ -142,7 +125,14 @@ dependencies {
     fabricLoader(libs.fabric.loader)
     neoforgeImplementation(libs.neoforge)
 
+    implementation(libs.fcapi.neoapi)
+
+    // We apply this to both main and fabric so fabric api's class tweaker gets applied
+    // But we don't actually use fabric api on main!!!
+    implementation(libs.fabric.api)
     fabricImplementation(libs.fabric.api)
+
+    fabricImplementation(libs.fcapi.fabricimpl)
 }
 
 publishing {

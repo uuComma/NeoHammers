@@ -4,13 +4,13 @@ neoforge-gradle = "7.1.39"
 modstitch-multiloader = "0.1.9"
 modstitch-manifests = "0.1.3"
 modstitch-modrepos = "0.1.2"
-modstitch-accessx = "0.1.0"
 
 minecraft = "26.3"
 fabric-loader = "0.19.5"
 neoforge = "26.3.0.38-beta"
 
 fabric-api = "0.163.0+26.3"
+fcapi = "26.3.1"
 
 [libraries]
 minecraft = { module = "com.mojang:minecraft", version.ref = "minecraft" }
@@ -18,6 +18,8 @@ fabric-loader = { module = "net.fabricmc:fabric-loader", version.ref = "fabric-l
 neoforge = { module = "net.neoforged:neoforge", version.ref = "neoforge" }
 
 fabric-api = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabric-api" }
+fcapi-neoapi = { module = "fuzs.forgeconfigapiport:forgeconfigapiport-common-neoforgeapi", version.ref = "fcapi" }
+fcapi-fabricimpl = { module = "fuzs.forgeconfigapiport:forgeconfigapiport-fabric", version.ref = "fcapi" }
 
 [plugins]
 fabric-loom = { id = "net.fabricmc.fabric-loom", version.ref = "fabric-loom" }
@@ -25,4 +27,3 @@ neoforge-gradle = { id = "net.neoforged.gradle.userdev", version.ref = "neoforge
 modstitch-multiloader = { id = "dev.isxander.mtk.multiloader", version.ref = "modstitch-multiloader" }
 modstitch-manifests = { id = "dev.isxander.mtk.manifests", version.ref = "modstitch-manifests" }
 modstitch-modrepos = { id = "dev.isxander.mtk.modrepos", version.ref = "modstitch-modrepos" }
-modstitch-accessx = { id = "dev.isxander.mtk.accessx", version.ref = "modstitch-accessx" }

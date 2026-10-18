@@ -14,6 +14,7 @@ public final class NeoHammers {
     public static final String MOD_ID = "neohammers";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
+    // TODO: ominous vault loot, config
     public static void init() {
         LOGGER.info("Loading {} for {}", MOD_ID, Services.PLATFORM.getLoader());
         LOGGER.info("Initializing...");

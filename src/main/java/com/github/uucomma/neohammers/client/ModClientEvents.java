@@ -2,6 +2,7 @@ package com.github.uucomma.neohammers.client;
 
 import com.github.uucomma.neohammers.common.enchantment.ModEnchantmentEffectComponents;
 import com.github.uucomma.neohammers.common.item.HammerItem;
+import com.github.uucomma.neohammers.mixin.client.LevelRendererAccessor;
 import com.github.uucomma.neohammers.xplat.EnvironmentOnly;
 import com.github.uucomma.neohammers.xplat.EnvironmentType;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -35,7 +36,8 @@ public final class ModClientEvents {
     public static void renderExtraOutlines(LevelRenderer levelRenderer, LevelRenderState levelRenderState, PoseStack poseStack) {
         GameRenderer gameRenderer = Minecraft.getInstance().gameRenderer;
         Vec3 camPos = levelRenderState.cameraRenderState.pos;
-        SubmitNodeStorage submitNodeStorage = levelRenderer.submitNodeStorage;
+        LevelRendererAccessor accessor = (LevelRendererAccessor) levelRenderer;
+        SubmitNodeStorage submitNodeStorage = accessor.neohammers$getSubmitNodeStorage();
         for (var renderState: extraBlockOutlineRenderStates) {
             BlockPos pos = renderState.pos();
             poseStack.pushPose();
@@ -46,7 +48,7 @@ public final class ModClientEvents {
                 renderType = RenderTypes.linesDepthBias();
 
                 // This renders the black outline of the outline
-                levelRenderer.submitHitOutline(
+                accessor.neohammers$submitHitOutline(
                         poseStack,
                         submitNodeStorage,
                         RenderTypes.secondaryBlockOutline(),
@@ -61,7 +63,7 @@ public final class ModClientEvents {
                 renderType = RenderTypes.linesTranslucent();
             }
 
-            levelRenderer.submitHitOutline(
+            accessor.neohammers$submitHitOutline(
                     poseStack,
                     submitNodeStorage,
                     renderType,

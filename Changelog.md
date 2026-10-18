@@ -1,2 +1,2 @@
-- Changed internal package structure
-- Improved visuals
+- Now available on both **NeoForge** and **Fabric**!
+- Improved outlines while using Hammering when using high-contrast block outlines

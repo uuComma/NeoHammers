@@ -40,14 +40,7 @@ You can either install a recipe viewer like JEI/EMI or use Minecraft's recipe bo
 
 **What's going to happen to Hammering?**
 
-*It's being archived*. ~~Since Architectury has barely received ports or updates,
-it's becoming increasingly difficult to work with. Because of this,
-I've spent a lot of time thinking about the future of my (three) mods and how
-to maintain them.
-At first, I considered creating another library, but I decided against that because
-of some other factors.
-In the end, I decided to switch to NeoForge. It offers many useful utilities
-for this mod and is updated more frequently than Architectury.~~
+*It's being archived*.
 
 **Where can I report issues? // Where can I create feature requests?**
 

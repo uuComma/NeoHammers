@@ -1,6 +1,5 @@
 package com.github.uucomma.neohammers.mixin;
 
-import com.github.uucomma.neohammers.NeoHammers;
 import com.github.uucomma.neohammers.common.enchantment.ModEnchantments;
 import net.minecraft.core.Holder;
 import net.minecraft.world.item.ItemStack;
@@ -18,10 +17,12 @@ import java.util.stream.Stream;
 @Mixin(EnchantmentHelper.class)
 public class EnchantmentHelperMixin {
     @Inject(method = "getAvailableEnchantmentResults", at = @At("RETURN"))
-    private static void neohammers$restrictHammeringLevel(int level, ItemStack stack, Stream<Holder<Enchantment>> possibleEnchantments, CallbackInfoReturnable<List<EnchantmentInstance>> cir) {
+    private static void neohammers$restrictHammeringLevel(int value, ItemStack itemStack, Stream<Holder<Enchantment>> source, CallbackInfoReturnable<List<EnchantmentInstance>> cir) {
+        /* TODO:
         if (NeoHammers.CONFIG.disableHammeringEnchantingTableRestriction.get()) {
             return;
         }
+         */
 
         List<EnchantmentInstance> list = cir.getReturnValue();
         for (int i = 0; i < list.size(); i++) {

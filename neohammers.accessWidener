@@ -1,0 +1,6 @@
+accessWidener v2 official
+
+accessible field net/minecraft/world/item/CreativeModeTabs TOOLS_AND_UTILITIES Lnet/minecraft/resources/ResourceKey;
+accessible field net/minecraft/client/renderer/LevelRenderer submitNodeStorage Lnet/minecraft/client/renderer/SubmitNodeStorage;
+
+accessible method net/minecraft/client/renderer/LevelRenderer submitHitOutline (Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;Lnet/minecraft/client/renderer/rendertype/RenderType;Lnet/minecraft/client/renderer/state/level/BlockOutlineRenderState;IFZ)V

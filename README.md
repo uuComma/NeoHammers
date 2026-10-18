@@ -1,6 +1,9 @@
 # Neo Hammers
 
 [![Available for NeoForge](https://github.com/intergrav/devins-badges/raw/refs/heads/v3/assets/compact/supported/neoforge_vector.svg)](https://neoforged.net/)
+[![Available for Fabric](https://github.com/intergrav/devins-badges/raw/refs/heads/v3/assets/compact/supported/fabric_vector.svg)](https://fabricmc.net/)
+
+*Fabric requires **[Fabric API](https://modrinth.com/mod/fabric-api)** and **[Forge Config API Port](https://modrinth.com/mod/forge-config-api-port)**!*
 
 ---
 

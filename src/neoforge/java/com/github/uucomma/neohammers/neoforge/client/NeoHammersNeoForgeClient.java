@@ -23,7 +23,7 @@ public final class NeoHammersNeoForgeClient {
     }
 
     @SubscribeEvent
-    public static void renderExtraRenderStates(RenderLevelStageEvent.AfterTranslucentFeatures event) {
+    public static void renderExtraRenderStates(RenderLevelStageEvent.AfterSky event) {
         ModClientEvents.renderExtraOutlines(event.getLevelRenderer(), event.getLevelRenderState(), event.getPoseStack());
     }
 

@@ -99,6 +99,8 @@ manifests {
     neoForgeModsToml(sourceSets.neoforge.get()) {
         from(common)
 
+        mixin("$modid-neoforge.mixins.json")
+
         dependency {
             modId = "neoforge"
             versionRange(providers.gradleProperty("neoforge.vr").get())

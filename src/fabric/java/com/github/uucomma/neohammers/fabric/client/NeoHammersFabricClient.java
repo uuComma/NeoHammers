@@ -10,23 +10,23 @@ import net.fabricmc.fabric.api.client.rendering.v1.level.LevelExtractionContext;
 import net.fabricmc.fabric.api.client.rendering.v1.level.LevelExtractionEvents;
 import net.fabricmc.fabric.api.client.rendering.v1.level.LevelRenderContext;
 import net.fabricmc.fabric.api.client.rendering.v1.level.LevelRenderEvents;
-import net.minecraft.world.phys.HitResult;
-import org.jspecify.annotations.Nullable;
+import net.minecraft.client.renderer.state.level.BlockOutlineRenderState;
 
 @Environment(EnvType.CLIENT)
 @EnvironmentOnly(EnvironmentType.CLIENT)
 public final class NeoHammersFabricClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
-        LevelExtractionEvents.AFTER_BLOCK_OUTLINE_EXTRACTION.register(this::extractExtraRenderStates);
-        LevelRenderEvents.AFTER_TRANSLUCENT_FEATURES.register(this::renderExtraRenderStates);
+        LevelExtractionEvents.END_EXTRACTION.register(this::extractExtraRenderStates);
+        LevelRenderEvents.BEFORE_BLOCK_OUTLINE.register(this::renderExtraRenderStates);
     }
 
-    private void renderExtraRenderStates(LevelRenderContext context) {
-        ModClientEvents.renderExtraOutlines(context.levelRenderer(), context.levelState(), context.poseStack());
-    }
-
-    private void extractExtraRenderStates(LevelExtractionContext context, @Nullable HitResult hitResult) {
+    private void extractExtraRenderStates(LevelExtractionContext context) {
         ModClientEvents.extractExtraRenderState(context.levelState(), context.level());
+    }
+
+    private boolean renderExtraRenderStates(LevelRenderContext context, BlockOutlineRenderState outlineRenderState) {
+        ModClientEvents.renderExtraOutlines(context.levelRenderer(), context.levelState(), context.poseStack());
+        return true;
     }
 }

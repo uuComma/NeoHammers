@@ -57,14 +57,12 @@ public class HammerItem extends Item {
 
     public static Stream<BlockPos> getBlocksInRadiusBasedOnEnchantment(Player player, BlockPos hitBlockPos, LevelAccessor level) {
         ItemStack stack = player.getMainHandItem();
-        /*
         Pair<?, Integer> highestLevel = EnchantmentHelper.getHighestLevel(stack, ModEnchantmentEffectComponents.EXTENDED_AREA_MINE.get());
         if (highestLevel == null) {
             return Stream.of();
         }
-         */
 
-        int hLevel = 3; // highestLevel.getSecond();
+        int hLevel = highestLevel.getSecond();
         int radius = hLevel / 4 + 1;
         int depth = hLevel % 3 - 1;
         if (depth < 0) depth = 2;

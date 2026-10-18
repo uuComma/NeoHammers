@@ -6,7 +6,6 @@ import com.github.uucomma.neohammers.xplat.registry.RegistryHelper;
 import com.github.uucomma.neohammers.xplat.registry.RegistrySupplier;
 import com.github.uucomma.neohammers.xplat.service.Services;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ToolMaterial;
 
@@ -25,7 +24,7 @@ public final class ModItems {
         return HELPER.register(id,
                 () -> new HammerItem(
                         material,
-                        BlockTags.MINEABLE_WITH_PICKAXE, //ModTags.BlockTags.MINEABLE_WITH_HAMMER,
+                        ModTags.BlockTags.MINEABLE_WITH_HAMMER,
                         attackDamage,
                         attackSpeed,
                         2,

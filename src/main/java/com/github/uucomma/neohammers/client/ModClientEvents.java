@@ -1,5 +1,6 @@
 package com.github.uucomma.neohammers.client;
 
+import com.github.uucomma.neohammers.common.enchantment.ModEnchantmentEffectComponents;
 import com.github.uucomma.neohammers.common.item.HammerItem;
 import com.github.uucomma.neohammers.xplat.EnvironmentOnly;
 import com.github.uucomma.neohammers.xplat.EnvironmentType;
@@ -20,6 +21,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.util.ARGB;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
@@ -74,24 +76,20 @@ public final class ModClientEvents {
     }
 
     public static void extractExtraRenderState(LevelRenderState levelRenderState, ClientLevel level) {
+        extraBlockOutlineRenderStates.clear();
         Player player = Minecraft.getInstance().player;
         if (player != null && HammerItem.canPlayerUseExtendedAreaMine(player) && Minecraft.getInstance().hitResult instanceof BlockHitResult hitResult) {
             ItemStack stack = player.getMainHandItem();
             BlockPos hitPos = hitResult.getBlockPos();
             BlockState hitState = level.getBlockState(hitPos);
-            /*
             if (!EnchantmentHelper.has(stack, ModEnchantmentEffectComponents.EXTENDED_AREA_MINE.get())) {
                 return;
             }
-
-             */
 
             int breakProgress = levelRenderState.blockBreakingRenderStates.stream()
                     .filter(state -> state.blockPos().equals(hitPos))
                     .findFirst().map(BlockBreakingRenderState::progress)
                     .orElse(-1);
-
-            extraBlockOutlineRenderStates.clear();
 
             boolean highContrast = Minecraft.getInstance().options.highContrastBlockOutline().get();
             HammerItem.getBlocksInRadiusBasedOnEnchantment(player, hitPos, level).forEach((pos) -> {

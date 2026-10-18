@@ -74,6 +74,12 @@ manifests {
             versionRange(providers.gradleProperty("fabric-api.vr").get())
             required()
         }
+
+        dependency {
+            modId = "forgeconfigapiport"
+            versionRange(providers.gradleProperty("fcapi.vr").get())
+            required()
+        }
     }
 
     neoForgeModsToml(sourceSets.neoforge.get()) {
@@ -133,6 +139,7 @@ dependencies {
     fabricImplementation(libs.fabric.api)
 
     fabricImplementation(libs.fcapi.fabricimpl)
+    fabricRuntimeOnly(libs.modmenu)
 }
 
 publishing {

@@ -3,6 +3,7 @@ package com.github.uucomma.neohammers.fabric;
 import com.github.uucomma.neohammers.NeoHammers;
 import com.github.uucomma.neohammers.common.event.ModEvents;
 import com.github.uucomma.neohammers.common.item.ModItems;
+import fuzs.forgeconfigapiport.fabric.api.v5.ConfigRegistry;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
@@ -15,6 +16,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.fml.config.ModConfig;
 import org.jspecify.annotations.Nullable;
 
 public final class NeoHammersFabric implements ModInitializer  {
@@ -23,6 +25,7 @@ public final class NeoHammersFabric implements ModInitializer  {
         NeoHammers.init();
         this.addCreativeModeTabContent();
         PlayerBlockBreakEvents.AFTER.register(this::onBreakBlock);
+        ConfigRegistry.INSTANCE.register(NeoHammers.MOD_ID, ModConfig.Type.COMMON, NeoHammers.CONFIG_SPEC, NeoHammers.MOD_ID + "-local.toml");
     }
 
     private void onBreakBlock(Level level, Player player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity) {

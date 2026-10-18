@@ -11,15 +11,15 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.client.event.ExtractLevelRenderStateEvent;
 import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
-//import net.neoforged.neoforge.client.gui.ConfigurationScreen;
-//import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
+import net.neoforged.neoforge.client.gui.ConfigurationScreen;
+import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 
 @Mod(value = NeoHammers.MOD_ID, dist = Dist.CLIENT)
 @EventBusSubscriber(modid = NeoHammers.MOD_ID, value = Dist.CLIENT)
 @EnvironmentOnly(EnvironmentType.CLIENT)
 public final class NeoHammersNeoForgeClient {
     public NeoHammersNeoForgeClient(ModContainer modContainer) {
-        //modContainer.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
+        modContainer.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
     }
 
     @SubscribeEvent

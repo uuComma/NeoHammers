@@ -11,6 +11,7 @@ neoforge = "26.3.0.38-beta"
 
 fabric-api = "0.163.0+26.3"
 fcapi = "26.3.1"
+modmenu = "21.0.0"
 
 [libraries]
 minecraft = { module = "com.mojang:minecraft", version.ref = "minecraft" }
@@ -20,6 +21,7 @@ neoforge = { module = "net.neoforged:neoforge", version.ref = "neoforge" }
 fabric-api = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabric-api" }
 fcapi-neoapi = { module = "fuzs.forgeconfigapiport:forgeconfigapiport-common-neoforgeapi", version.ref = "fcapi" }
 fcapi-fabricimpl = { module = "fuzs.forgeconfigapiport:forgeconfigapiport-fabric", version.ref = "fcapi" }
+modmenu = { module = "com.terraformersmc:modmenu", version.ref = "modmenu" }
 
 [plugins]
 fabric-loom = { id = "net.fabricmc.fabric-loom", version.ref = "fabric-loom" }

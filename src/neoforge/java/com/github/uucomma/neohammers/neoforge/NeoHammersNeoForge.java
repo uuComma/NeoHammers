@@ -16,6 +16,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.config.ModConfig;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.level.block.BreakBlockEvent;
@@ -26,6 +27,7 @@ public final class NeoHammersNeoForge {
         NeoHammers.init();
         eventBus.register(this);
         NeoForge.EVENT_BUS.addListener(this::onBreakBlock);
+        modContainer.registerConfig(ModConfig.Type.LOCAL, NeoHammers.CONFIG_SPEC);
     }
 
     @SubscribeEvent

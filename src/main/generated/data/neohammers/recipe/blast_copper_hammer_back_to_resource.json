@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:blasting",
+  "cookingtime": 260,
+  "experience": 0.8,
+  "ingredient": "neohammers:copper_hammer",
+  "result": {
+    "id": "minecraft:copper_ingot"
+  }
+}

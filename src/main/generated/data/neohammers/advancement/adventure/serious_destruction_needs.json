@@ -1,0 +1,36 @@
+{
+  "parent": "neohammers:adventure/hammer_time",
+  "criteria": {
+    "has_netherite_hammer": {
+      "conditions": {
+        "items": [
+          {
+            "items": "neohammers:netherite_hammer"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.neohammers.seriousDestructionNeeds.desc"
+    },
+    "frame": "challenge",
+    "icon": {
+      "id": "neohammers:netherite_hammer"
+    },
+    "title": {
+      "translate": "advancement.neohammers.seriousDestructionNeeds.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_netherite_hammer"
+    ]
+  ],
+  "rewards": {
+    "experience": 115
+  },
+  "sends_telemetry_event": true
+}

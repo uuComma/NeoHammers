@@ -1,0 +1,32 @@
+{
+  "parent": "neohammers:adventure/hammer_time",
+  "criteria": {
+    "destroy_everything": {
+      "conditions": {
+        "minLevel": 6
+      },
+      "trigger": "neohammers:use_extended_area_mine_trigger"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.neohammers.seriousDestruction.desc"
+    },
+    "frame": "challenge",
+    "icon": {
+      "id": "minecraft:enchanted_book"
+    },
+    "title": {
+      "translate": "advancement.neohammers.seriousDestruction.title"
+    }
+  },
+  "requirements": [
+    [
+      "destroy_everything"
+    ]
+  ],
+  "rewards": {
+    "experience": 95
+  },
+  "sends_telemetry_event": true
+}

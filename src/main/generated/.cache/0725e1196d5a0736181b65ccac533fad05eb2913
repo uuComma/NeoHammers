@@ -1,0 +1,15 @@
+// 26.3	2026-10-18T11:02:19.3467603	Model Definitions - neohammers
+0491fe1a850d2d8372678cd9a63012fb5ef20345 assets/neohammers/items/copper_hammer.json
+03c5bcecc008129470515788d96a00e8e6e6e390 assets/neohammers/items/diamond_hammer.json
+8eb0abb0ca4adcda0ee7c783f1fae785f58f6b51 assets/neohammers/items/golden_hammer.json
+400201dedb882d10881886d5af2b1f6e129033b6 assets/neohammers/items/iron_hammer.json
+9d6643e3bcaa2ff9c3dae5539f3afc095c1a9e46 assets/neohammers/items/netherite_hammer.json
+b545b22341b06087e5fe76d6bd560493884947bf assets/neohammers/items/stone_hammer.json
+e0ad5ae7979877f57e48a9a0a3121feb4dd5b4e3 assets/neohammers/items/wooden_hammer.json
+868b75e9fe091cf69ac67d0be276d33fdb0d9875 assets/neohammers/models/item/copper_hammer.json
+e7e76a8f276fb66f6263a3f74e1105fd5ad64511 assets/neohammers/models/item/diamond_hammer.json
+cf1e574dac934237f799fa4da99b0c61ff07f59f assets/neohammers/models/item/golden_hammer.json
+9fdd90f099410b168b33702183068890427a93ef assets/neohammers/models/item/iron_hammer.json
+8b260935cf3e69216de7854a4432cfa7e0fae2bc assets/neohammers/models/item/netherite_hammer.json
+31123c181df31eb32d57eb08a7bcf7ec402d6b64 assets/neohammers/models/item/stone_hammer.json
+f18c0a48141677df861d89dbdd39b2d315d11873 assets/neohammers/models/item/wooden_hammer.json

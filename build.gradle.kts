@@ -109,22 +109,25 @@ manifests {
     }
 }
 
-runs.register("neoforgeClient") {
-    runType("client")
-}
-
 val generatedResourcesFolder: File = project.file("src/main/generated").absoluteFile
 
 sourceSets {
     main {
         resources {
-            srcDirs.add(generatedResourcesFolder)
+            srcDir(generatedResourcesFolder)
+            exclude("**/*.bbmodel") // BlockBench project files
+            exclude("src/main/generated/.cache") // datagen cache files
         }
     }
 }
 
 ngRuns.create("clientData") {
-    arguments.addAll("--mod", modid, "--all", "--output", generatedResourcesFolder.absolutePath, "--exisiting", file("src/main/resources/").absolutePath)
+    arguments.addAll(
+        "--mod", modid,
+        "--all",
+        "--output", generatedResourcesFolder.absolutePath,
+        "--existing", file("src/main/resources/").absolutePath
+    )
 }
 
 repositories {

@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "#": "#c:rods/wooden",
+    "x": "#c:storage_blocks/copper"
+  },
+  "pattern": [
+    " x ",
+    " #x",
+    "#  "
+  ],
+  "result": {
+    "id": "neohammers:copper_hammer"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:adventure/root",
+  "criteria": {
+    "has_any_hammer": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#neohammers:hammers"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.neohammers.hammerTime.desc"
+    },
+    "icon": {
+      "id": "neohammers:iron_hammer"
+    },
+    "title": {
+      "translate": "advancement.neohammers.hammerTime.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_any_hammer"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

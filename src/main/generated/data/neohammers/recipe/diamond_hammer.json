@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "#": "#c:rods/wooden",
+    "x": "minecraft:diamond_block"
+  },
+  "pattern": [
+    " x ",
+    " #x",
+    "#  "
+  ],
+  "result": {
+    "id": "neohammers:diamond_hammer"
+  }
+}

@@ -1,7 +1,7 @@
 package com.github.uucomma.neohammers.neoforge.data;
 
 import com.github.uucomma.neohammers.NeoHammers;
-import com.github.uucomma.neohammers.common.ModVillagerTrades;
+import com.github.uucomma.neohammers.common.util.ModVillagerTrades;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;

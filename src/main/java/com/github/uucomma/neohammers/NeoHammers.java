@@ -17,7 +17,7 @@ public final class NeoHammers {
 
     public static final ModLocalConfig CONFIG;
     public static final ModConfigSpec CONFIG_SPEC;
-    
+
     public static void init() {
         LOGGER.info("Loading {} for {}", MOD_ID, Services.PLATFORM.getLoader());
         LOGGER.info("Initializing...");

@@ -82,12 +82,7 @@ manifests {
             required()
         }
 
-        val links = mutableMapOf<String, String>()
-        // TODO:
-        links["modmenu/source"] = sourcesUrl.get()
-        val modMenuData = mutableMapOf<String, Any>()
-        modMenuData["links"] = links
-        customData.put("modmenu", modMenuData)
+        //customData.put("modmenu.links.modmenu\\.source", sourcesUrl.get())
     }
 
     neoForgeModsToml(sourceSets.neoforge.get()) {

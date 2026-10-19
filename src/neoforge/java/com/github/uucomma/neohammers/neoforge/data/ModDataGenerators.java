@@ -32,5 +32,8 @@ public final class ModDataGenerators {
         event.createProvider(ModVillagerTradeTagsProvider::new);
         event.createProvider(ModBlockTagsProvider::new);
         event.createProvider(ModItemTagsProvider::new);
+
+        // NeoForge only
+        event.createProvider(ModGlobalLootModifierProvider::new);
     }
 }

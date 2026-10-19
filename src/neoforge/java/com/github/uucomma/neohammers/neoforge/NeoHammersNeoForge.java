@@ -3,6 +3,7 @@ package com.github.uucomma.neohammers.neoforge;
 import com.github.uucomma.neohammers.NeoHammers;
 import com.github.uucomma.neohammers.common.event.ModEvents;
 import com.github.uucomma.neohammers.common.item.ModItems;
+import com.github.uucomma.neohammers.neoforge.loot.ModLootModifiers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
@@ -25,6 +26,7 @@ import net.neoforged.neoforge.event.level.block.BreakBlockEvent;
 public final class NeoHammersNeoForge {
     public NeoHammersNeoForge(IEventBus eventBus, ModContainer modContainer) {
         NeoHammers.init();
+        ModLootModifiers.register();
         eventBus.register(this);
         NeoForge.EVENT_BUS.addListener(this::onBreakBlock);
         modContainer.registerConfig(ModConfig.Type.LOCAL, NeoHammers.CONFIG_SPEC);

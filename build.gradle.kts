@@ -1,6 +1,9 @@
 import dev.isxander.mtk.multiloader.utils.ngRuns
+import me.modmuss50.mpp.ReleaseType
+import java.time.LocalDateTime
 
 plugins {
+    ->
     `java-library`
 
     alias(libs.plugins.fabric.loom) apply false
@@ -9,12 +12,15 @@ plugins {
     alias(libs.plugins.modstitch.multiloader)
     alias(libs.plugins.modstitch.manifests)
     alias(libs.plugins.modstitch.modrepos)
+    alias(libs.plugins.modpublishplugin)
 
     `maven-publish`
 }
 
+val modversion = providers.gradleProperty("mod.version").get();
+
 group = "com.github.uucomma.neohammers"
-version = "${providers.gradleProperty("mod.version").get()}+mc${libs.versions.minecraft.get()}"
+version = "$modversion+mc${libs.versions.minecraft.get()}"
 
 val buildNumber = providers.gradleProperty("mod.buildNum").get()
 if (buildNumber.isNotBlank()) {
@@ -153,4 +159,89 @@ publishing {
     }
 
     repositories { }
+}
+
+publishMods {
+    val fabricJar = tasks.fabricJar.flatMap { it.archiveFile }
+    val neoforgeJar = tasks.neoforgeJar.flatMap { it.archiveFile }
+    val fabricSourcesJar = tasks.fabricSourcesJar.flatMap { it.archiveFile }
+    val neoforgeSourcesJar = tasks.neoforgeSourcesJar.flatMap { it.archiveFile }
+
+    type.set(ReleaseType.of(providers.gradleProperty("release_type").get()))
+    displayName.set("Neo Hammers v${project.version}")
+
+    dryRun = providers.gradleProperty("dry_release_run").get() == "true"
+
+    changelog.set(providers.fileContents(rootProject.layout.projectDirectory.file("Changelog.md")).asText
+        .map {
+            it.replace("{version}", project.version.toString())
+            it.replace("{mc}", supportedMinecraftVersions.get().joinToString(","))
+        })
+
+    val baseCurseForgeOptions = curseforgeOptions {
+        accessToken = providers.environmentVariable("CURSEFORGE_TOKEN")
+        javaVersions.add(JavaVersion.VERSION_25)
+        minecraftVersions.set(supportedMinecraftVersions)
+        client.set(true)
+        server.set(true)
+        projectId = "1535592"
+    }
+
+    val baseModrinthOptions = modrinthOptions {
+        accessToken = providers.environmentVariable("MODRINTH_TOKEN")
+        minecraftVersions.set(supportedMinecraftVersions)
+        environment.set(CLIENT_AND_SERVER)
+        projectId = "7lhLLKcs"
+    }
+
+    curseforge("curseforgeFabric") {
+        from(baseCurseForgeOptions)
+
+        file = fabricJar
+        additionalFiles.from(fabricSourcesJar)
+
+        modLoaders.add("fabric")
+
+        requires("fabric-api", "forge-config-api-port")
+        optional("modmenu")
+    }
+
+    curseforge("curseforgeNeoForge") {
+        from(baseCurseForgeOptions)
+
+        file = neoforgeJar
+        additionalFiles.from(neoforgeSourcesJar)
+
+        modLoaders.add("neoforge")
+    }
+
+    modrinth("modrinthFabric") {
+        from(baseModrinthOptions)
+
+        file = fabricJar
+        additionalFiles.from(fabricSourcesJar)
+
+        modLoaders.add("fabric")
+
+        requires("fabric-api", "forge-config-api-port")
+        optional("modmenu")
+    }
+
+    modrinth("modrinthNeoForge") {
+        from(baseModrinthOptions)
+
+        file = fabricJar
+        additionalFiles.from(fabricSourcesJar)
+
+        modLoaders.add("neoforge")
+    }
+
+    github {
+        accessToken.set(providers.environmentVariable("GITHUB_TOKEN"))
+        repository.set("uuComma/NeoHammers")
+        commitish.set(providers.gradleProperty("branch").get())
+        tagName.set(project.version.toString())
+
+        additionalFiles.from(fabricJar, neoforgeJar, fabricSourcesJar, neoforgeSourcesJar)
+    }
 }

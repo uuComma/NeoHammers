@@ -239,8 +239,8 @@ publishMods {
     modrinth("modrinthNeoForge") {
         from(baseModrinthOptions)
 
-        file = fabricJar
-        additionalFiles.from(fabricSourcesJar)
+        file = neoforgeJar
+        additionalFiles.from(neoforgeSourcesJar)
 
         modLoaders.add("neoforge")
     }

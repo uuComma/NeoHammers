@@ -151,6 +151,14 @@ dependencies {
     fabricRuntimeOnly(libs.modmenu)
 }
 
+tasks.neoforgeJar {
+    archiveClassifier.set("neo")
+}
+
+tasks.neoforgeSourcesJar {
+    archiveClassifier.set("neo-sources")
+}
+
 publishing {
     publications {
         register<MavenPublication>("mavenJava") {
@@ -167,31 +175,32 @@ publishMods {
     val fabricSourcesJar = tasks.fabricSourcesJar.flatMap { it.archiveFile }
     val neoforgeSourcesJar = tasks.neoforgeSourcesJar.flatMap { it.archiveFile }
 
-    type.set(ReleaseType.of(providers.gradleProperty("release_type").get()))
+    type.set(ReleaseType.of(providers.gradleProperty("publish.releaseType").get()))
     displayName.set("Neo Hammers v${project.version}")
 
-    dryRun = providers.gradleProperty("dry_release_run").get() == "true"
+    dryRun.set(providers.gradleProperty("publish.dryRun").get() == "true")
 
     changelog.set(providers.fileContents(rootProject.layout.projectDirectory.file("Changelog.md")).asText
         .map {
-            it.replace("{version}", project.version.toString())
-            it.replace("{mc}", supportedMinecraftVersions.get().joinToString(","))
+            it
+                .replace("{version}", project.version.toString())
+                .replace("{mc}", supportedMinecraftVersions.get().joinToString(","))
         })
 
     val baseCurseForgeOptions = curseforgeOptions {
-        accessToken = providers.environmentVariable("CURSEFORGE_TOKEN")
+        accessToken.set(providers.environmentVariable("CURSEFORGE_TOKEN"))
         javaVersions.add(JavaVersion.VERSION_25)
         minecraftVersions.set(supportedMinecraftVersions)
         client.set(true)
         server.set(true)
-        projectId = "1535592"
+        projectId.set(providers.gradleProperty("publish.curseforgeId"))
     }
 
     val baseModrinthOptions = modrinthOptions {
-        accessToken = providers.environmentVariable("MODRINTH_TOKEN")
+        accessToken.set(providers.environmentVariable("MODRINTH_TOKEN"))
         minecraftVersions.set(supportedMinecraftVersions)
         environment.set(CLIENT_AND_SERVER)
-        projectId = "7lhLLKcs"
+        projectId.set(providers.gradleProperty("publish.modrinthId"))
     }
 
     curseforge("curseforgeFabric") {
@@ -238,10 +247,11 @@ publishMods {
 
     github {
         accessToken.set(providers.environmentVariable("GITHUB_TOKEN"))
-        repository.set("uuComma/NeoHammers")
-        commitish.set(providers.gradleProperty("branch").get())
+        repository.set(providers.gradleProperty("publish.githubRepo"))
+        commitish.set(providers.gradleProperty("publish.githubRepo.branch").get())
         tagName.set(project.version.toString())
 
-        additionalFiles.from(fabricJar, neoforgeJar, fabricSourcesJar, neoforgeSourcesJar)
+        file = neoforgeJar
+        additionalFiles.from(fabricJar, fabricSourcesJar, neoforgeSourcesJar)
     }
 }

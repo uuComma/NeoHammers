@@ -8,11 +8,14 @@ import com.github.uucomma.neohammers.xplat.service.Services;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ToolMaterial;
+import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProviders;
 
 public final class ModItems {
     private static final RegistryHelper<Item> HELPER = Services.REGISTRY.create(NeoHammers.MOD_ID, Registries.ITEM);
 
-    public static final RegistrySupplier<Item> WOODEN_HAMMER = createHammer("wooden_hammer", ToolMaterial.WOOD, 5, -3.1f, of());
+    public static final RegistrySupplier<Item> WOODEN_HAMMER = createHammer("wooden_hammer", ToolMaterial.WOOD, 5, -3.1f,
+            of().cookingFuel(ContextIntProviders.COOKING_TIME_WOOD_ITEMS_LARGE));
+
     public static final RegistrySupplier<Item> STONE_HAMMER = createHammer("stone_hammer", ToolMaterial.STONE, 6, -3.1f, of());
     public static final RegistrySupplier<Item> COPPER_HAMMER = createHammer("copper_hammer", ToolMaterial.COPPER, 7, -3.2f, of());
     public static final RegistrySupplier<Item> IRON_HAMMER = createHammer("iron_hammer", ToolMaterial.IRON, 5, -3.1f, of());
